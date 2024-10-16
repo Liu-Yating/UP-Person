@@ -1,0 +1,12 @@
+easydict==1.11
+ftfy==6.2.3
+numpy==1.23.0
+Pillow==10.4.0
+prettytable==3.11.0
+PyYAML==6.0.2
+regex==2023.10.3
+timm==0.5.4
+torch==1.12.1+cu113
+torchvision==0.13.1+cu113
+tqdm==4.66.1
+transformers==4.8.1
