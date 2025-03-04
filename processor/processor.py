@@ -40,6 +40,14 @@ def do_train(start_epoch, args, model, train_loader, evaluator, optimizer,
 
     best_top1 = 0.0
 
+    # nvmlInit()
+    # handle = nvmlDeviceGetHandleByIndex(2)
+    # # 获取初始内存使用情况
+    # mem_info_before = nvmlDeviceGetMemoryInfo(handle)
+    # used_memory_before = mem_info_before.used / (1024 ** 2)  # 转换为 MB
+
+    # top1 = evaluator.eval(model.eval())
+
     # train
     for epoch in range(start_epoch, num_epoch + 1):
         start_time = time.time()
@@ -51,6 +59,24 @@ def do_train(start_epoch, args, model, train_loader, evaluator, optimizer,
             batch = {k: v.to(device) for k, v in batch.items()}
 
             ret = model(batch)
+
+            # flops, params = profile(model, (batch,))
+            # print('flops: ', flops, 'params: ', params)
+            # print('flops: %.2f M, params: %.2f M' % (flops / 1000000.0, params / 1000000.0))
+
+            
+            # # 获取算法运行后的内存使用情况
+            # mem_info_after = nvmlDeviceGetMemoryInfo(handle)
+            # used_memory_after = mem_info_after.used / (1024 ** 2)  # 转换为 MB
+
+            # # 计算内存使用差异
+            # memory_used_by_algorithm = used_memory_after - used_memory_before
+
+            # # 输出结果
+            # print(f"Initial GPU memory usage: {used_memory_before:.2f} MB")
+            # print(f"Final GPU memory usage: {used_memory_after:.2f} MB")
+            # print(f"Memory used by the algorithm: {memory_used_by_algorithm:.2f} MB")
+
 
             total_loss = sum([v for k, v in ret.items() if "loss" in k])
 

@@ -4167,9 +4167,7 @@ def _scaled_dot_product_attention(
     
     B, Nt, E = q.shape
     Nkv = k.shape[1]
-    #q = q / math.sqrt(E) #错误版本加了此行
-    # (B, Nt, E) x (B, E, Ns) -> (B, Nt, Ns)
-    scale = (E // num_heads) ** -0.5 #错误版本没有此行
+    scale = (E // num_heads) ** -0.5
     q = q.reshape(B, Nt, num_heads, E // num_heads)
     q = q.permute(0, 2, 1, 3)
     
@@ -4190,9 +4188,8 @@ def _scaled_dot_product_attention(
     attn = softmax(attn, dim=-1)
     if dropout_p > 0.0:
         attn = dropout(attn, p=dropout_p)
-    # (B, Nt, Ns) x (B, Ns, E) -> (B, Nt, E)
     
-    if prefix != None: #错误版本加了此行
+    if prefix != None: 
         attn = prefix.compensate(attn) 
     
     output = (attn @ v).transpose(1, 2).reshape(B, Nt, E)

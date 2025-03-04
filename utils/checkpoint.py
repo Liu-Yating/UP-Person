@@ -42,7 +42,7 @@ class Checkpointer:
 
         save_file = os.path.join(self.save_dir, "{}.pth".format(name))
         self.logger.info("Saving checkpoint to {}".format(save_file))
-        torch.save(data, save_file)
+        #torch.save(data, save_file)
 
     def load(self, f=None):
         if not f:

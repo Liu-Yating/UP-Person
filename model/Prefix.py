@@ -30,7 +30,8 @@ class Prefix(nn.Module):
         
         #add
         #self.scale_to_grad = 1 #5.0
-        self.scale_to_grad = nn.Parameter(torch.tensor(10.0)) #10.0
+        self.scale_to_grad = nn.Parameter(torch.tensor(100.0)) #10.0
+        print(f"prefix_scale_init: {self.scale_to_grad}")
 
     def forward(self, key: torch.Tensor, val: torch.Tensor):
         return self.key(key), self.val(val)

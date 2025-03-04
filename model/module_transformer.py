@@ -34,14 +34,24 @@ class QuickGELU(nn.Module):
 class Adapter(nn.Module):
     def __init__(self, c_in, c_out, reduction=8):
         super(Adapter, self).__init__()
+        # self.fc = nn.Sequential(
+        #     nn.Linear(c_in, c_in // reduction, bias=False),
+        #     nn.ReLU(inplace=True),
+        #     nn.Linear(c_in // reduction, c_out, bias=False),
+        #     # nn.ReLU(inplace=True)
+        # )
         self.down =  nn.Linear(c_in, c_in // reduction)
         self.ac = nn.ReLU(inplace=True)
         self.up = nn.Linear(c_in // reduction, c_out)
         
+        # self.linear = nn.Linear(c_in, c_out)
+
     def forward(self, x):
         res = x
         x = self.ac(self.down(x)) 
         x = self.up(x)
+        # out = res + x
+        # return out
         return x
 
 class ResidualAttentionBlock_MaPLe(nn.Module):
@@ -111,6 +121,8 @@ class ResidualAttentionBlock_MaPLe(nn.Module):
             else:
                 attn_mask_index = attn_mask[0]
             
+        # x = x + self.attention(self.ln_1(x), attn_mask, weight)
+        # x = x + self.mlp(self.ln_2(x))
         if self.index > (depth_adapter -1) :
             x = x + self.attention(self.ln_1(x) + self.scale_1 * self.adapter_ln_msa(x), attn_mask_index, weight, depth)
             x = x + self.mlp(self.ln_2(x) + self.scale_2 * self.adapter_ln_mlp(x))
@@ -125,6 +137,7 @@ class Transformer(nn.Module):
         super(Transformer, self).__init__()
         self.width = width
         self.layers = layers
+        # self.resblocks = nn.Sequential(*[ResidualAttentionBlock(width, heads, attn_mask) for _ in range(layers)])
         self.resblocks = nn.Sequential(*[ResidualAttentionBlock_MaPLe(width, heads, attn_mask,  text_layer, i, depth) for i in range(layers)])
 
     def forward(self, x: torch.Tensor, weight, attn_mask: torch.Tensor = None, depth=None):

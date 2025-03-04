@@ -10,13 +10,14 @@ from utils.comm import get_world_size
 
 from .bases import ImageDataset, TextDataset, ImageTextDataset, ImageTextMLMDataset
 
+from .flickr30k import FLICKR30K
+from .mscoco import MSCOCO
 from .cuhkpedes import CUHKPEDES
 from .icfgpedes import ICFGPEDES
 from .rstpreid import RSTPReid
 import numpy as np
 
-__factory = {'CUHK-PEDES': CUHKPEDES, 'ICFG-PEDES': ICFGPEDES, 'RSTPReid': RSTPReid}
-
+__factory = {'flickr30k': FLICKR30K, 'mscoco': MSCOCO, 'CUHK-PEDES': CUHKPEDES, 'ICFG-PEDES': ICFGPEDES, 'RSTPReid': RSTPReid}
 
 def build_transforms(img_size=(384, 128), aug=False, is_train=True):
     height, width = img_size
@@ -153,9 +154,13 @@ def build_dataloader(args, tranforms=None):
             test_transforms = tranforms
         else:
             test_transforms = build_transforms(img_size=args.img_size,
-                                               is_train=False)
+                                               is_train=False)   #is_train=False fix
 
         ds = dataset.test
+        # with open("test_data_split_500.json", "r", encoding="utf-8") as file:
+        #     test_data = json.load(file)
+        # ds = test_data
+
         test_img_set = ImageDataset(ds['image_pids'], ds['img_paths'],
                                     test_transforms)
         test_txt_set = TextDataset(ds['caption_pids'],
@@ -168,6 +173,6 @@ def build_dataloader(args, tranforms=None):
                                      num_workers=num_workers)
         test_txt_loader = DataLoader(test_txt_set,
                                      batch_size=args.test_batch_size,
-                                     shuffle=False,
+                                     shuffle=False,        # shuffle=False, fix
                                      num_workers=num_workers)
         return test_img_loader, test_txt_loader, num_classes

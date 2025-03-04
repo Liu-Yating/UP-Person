@@ -160,7 +160,7 @@ class ImageTextMLMDataset(Dataset):
             'pids': pid,
             'image_ids': image_id,
             'images': img,
-            'caption_ids': caption_tokens,
+            'caption_ids': mlm_tokens,   #caption_tokens
             'mlm_ids': mlm_tokens,
             'mlm_labels': mlm_labels
         }

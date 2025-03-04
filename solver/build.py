@@ -25,11 +25,11 @@ def build_optimizer(args, model):
         if 'adapter' in key:
             lr = args.lr
         elif 'prefix' in key:
-            lr = 5e-5
+            lr = args.lr
         elif 'lora' in key:
             lr = args.lr
         else:
-            lr = args.lr
+            lr = args.lr  #adapter scale
         
         
         params += [{"params": [value], "lr": lr, "weight_decay": weight_decay}]

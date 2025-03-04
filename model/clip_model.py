@@ -685,7 +685,7 @@ def build_CLIP_from_openai_pretrained(name: str, image_size: Union[int, Tuple[in
     """
     if name in _MODELS:
         model_path = _download(_MODELS[name], download_root or os.path.expanduser("~/.cache/clip")) #os.path.expanduser() 是一个函数，用于将包含波浪符（~）的路径字符串扩展为完整的用户主目录路径。
-    elif os.path.isfile(name): #用于检查给定路径是否指向一个文件
+    elif os.path.isfile(name): 
         model_path = name
     else:
         raise RuntimeError(f"Model {name} not found; available models = {available_models()}")

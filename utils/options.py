@@ -40,7 +40,7 @@ def get_args():
 
     ######################## solver ########################
     parser.add_argument("--optimizer", type=str, default="Adam", help="[SGD, Adam, Adamw]")
-    parser.add_argument("--lr", type=float, default=1e-3) 
+    parser.add_argument("--lr", type=float, default=1e-3)  #1e-5
     parser.add_argument("--bias_lr_factor", type=float, default=2.)
     parser.add_argument("--momentum", type=float, default=0.9)
     parser.add_argument("--weight_decay", type=float, default=4e-5)
@@ -71,11 +71,11 @@ def get_args():
 
     parser.add_argument("--n_ctx", default=4, type=int, help="the length of prompt.")
     parser.add_argument("--depth", default=12, type=int, help="the depth of maple.")
-    parser.add_argument("--prefix_length", default=10, type=int, help="the length of prefix.")
+    parser.add_argument("--prefix_length", default=20, type=int, help="the length of prefix.")
     parser.add_argument("--rank", default=64, type=int, help="the rank of lora method.")
     parser.add_argument("--depth_lora", default=12, type=int, help="the depth of lora method.")
     parser.add_argument("--depth_prefix", default=12, type=int, help="the depth of prefix method.")
-    parser.add_argument("--depth_adapter", default=0, type=int, help="the depth of adapter method, 0 represatates the deepest configuration.")
+    parser.add_argument("--depth_adapter", default=0, type=int, help="the depth of adapter method.")
     
     
     args = parser.parse_args()
