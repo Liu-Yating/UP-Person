@@ -64,6 +64,17 @@ python train.py \
 python test.py --config_file 'path/to/model_dir/configs.yaml'
 ```
 
+## Citation
+If you find this code useful for your research, please cite our paper.
+
+```tex
+@article{liu2025up,
+  title={UP-Person: Unified Parameter-Efficient Transfer Learning for Text-based Person Retrieval},
+  author={Liu, Yating and Li, Yaowei and Lan, Xiangyuan and Yang, Wenming and Liu, Zimo and Liao, Qingmin},
+  journal={arXiv preprint arXiv:2504.10084},
+  year={2025}
+}
+```
 
 ## Acknowledgments
 Some components of this code implementation are adopted from [CLIP](https://github.com/openai/CLIP), [IRRA](https://github.com/anosorae/IRRA) and [LAE](https://github.com/gqk/LAE). We sincerely appreciate for their contributions.
